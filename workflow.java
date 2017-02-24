@@ -60,12 +60,9 @@ class MainWorker {
             public void onRead(TextWebSocketFrame frame) {
                 if (frame.text().contains("event-")) {
                     String name = frame.text().replaceAll("(message|[^event\\-\\d\\:])", "").split("::")[0].replace(":","");
-
-                    for (String key : eventList.keySet()) {
-                        if(name == key)
-                        {
-                            EventHandler.onEvent(eventList.get(key), frame.text());
-                        }
+                    String key  = eventList.get(name);
+                    if(key != eventList.get(name)){
+                        EventHandler.onEvent(key, frame.text());
                     }
                 }
             }
